@@ -1,0 +1,13 @@
+Worlds simplest chat
+====================
+* Prerequisites
+Install node.js & npm, https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
+Install the socket.io node module
+	npm install socket.io
+
+
+http://socket.io/#how-to-use
+
+
+
+http://stackoverflow.com/questions/7490547/sending-messages-to-all-browsers-with-socket-io
