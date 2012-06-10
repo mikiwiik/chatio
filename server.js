@@ -33,7 +33,7 @@ io.sockets.on('connection', function (socket) {
         data.id = socket.id;
         // TODO: Add messageIs add sender id.
 
-        socket.broadcast.emit('update', data);
+        socket.broadcast.emit('message', data);
 
         // Send to specific <namespace>.socket(<id>).send()
 	});

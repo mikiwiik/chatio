@@ -6,37 +6,32 @@
 		<div id="chatWindow"></div>
         <form name="sender" action="">
             <input id="message"  type='text' name='message' value="Hello World!" />
-            <button id='send' onclick="sendMessage(this);">Send</button>
+            <button id='send'>Send</button>
         </form>
 
         <script src="/socket.io/socket.io.js"></script>
         <script>
-            //(function(window, document, undefined) {
             var socket = io.connect('http://localhost');
 
-            function sendMessage() {
+            document.getElementById("send").onclick = function(event) {
                 var message = document.getElementById("message").value;
                 console.log("sendMessage called with:" + JSON.stringify(message));
 
-                // Send to all: io.sockets.emit('get_message', data);
+                // TODO: Broadcast to everyone
                 socket.emit('chat', {message: message} );
-                //io.sockets.emit('chat', {message: message} );
+                // TODO: Why's send not workking?
+                io.sockets.emit('chat', {message: message} );
             }
 
-		    socket.on('update', function (data) {
+            //socket.on('update', function (data) {
+		    socket.on('message', function (data) {
                 var div = document.createElement("div");
-                //div.id div.class
                 div.innerHTML = data.id +" "+ data.message;
 
                 var chat = document.getElementById("chatWindow");
                 chat.appendChild(div);
-
-                //console.log(data.message);
-		        //console.log(data.hello);
-		        //socket.emit('my other event', { my: 'data' });
 		    });
             // TODO: store id on server http://stackoverflow.com/questions/7702461/socket-io-custom-client-id
-            //});
         </script>
 	</body>
 </html>

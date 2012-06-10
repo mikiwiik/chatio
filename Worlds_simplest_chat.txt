@@ -5,9 +5,11 @@ Install node.js & npm, https://github.com/joyent/node/wiki/Installing-Node.js-vi
 Install the socket.io node module
 	npm install socket.io
 
-
 http://socket.io/#how-to-use
 
-
-
 http://stackoverflow.com/questions/7490547/sending-messages-to-all-browsers-with-socket-io
+
+http://davidwalsh.name/websocket
+http://howtonode.org/websockets-socketio
+
+http://stackoverflow.com/questions/8577574/socket-io-with-cluster-iterating-over-all-open-connections
