@@ -21,7 +21,6 @@
                 // TODO: Why's send not working?
             }
 
-            //socket.on('update', function (data) {
 		    socket.on('message', function (data) {
                 var div = document.createElement("div");
                 div.innerHTML = data.id +" "+ data.message;
