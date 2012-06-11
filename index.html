@@ -15,10 +15,9 @@
                 var message = document.getElementById("message").value;
                 console.log("sendMessage called with:" + JSON.stringify(message));
 
-                // TODO: Broadcast to everyone
+                // TODO: Broadcast to everyone, including myself
                 socket.emit('chat', {message: message} );
-                // TODO: Why's send not workking?
-                io.sockets.emit('chat', {message: message} );
+                // TODO: Why's send not working?
             }
 
             //socket.on('update', function (data) {
