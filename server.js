@@ -26,6 +26,8 @@ io.sockets.on('connection', function (socket) {
 
 	// TODO: Act as a message broker
     socket.on('chat', function (data) {
+
+        // TODO: allow defining alias for socket, like me=miki. Show that instead. Or define in client
         console.log("chat|" + socket.id +":" + JSON.stringify(data));
 
         //console.log(JSON.stringify(io.sockets.sockets));
