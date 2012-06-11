@@ -22,11 +22,12 @@
             }
 
 		    socket.on('message', function (data) {
+                // Could be jQuery, like: $("#chatWindow").append("<div>" + data.id +" "+ data.message +"</div>");
+
                 var div = document.createElement("div");
                 div.innerHTML = data.id +" "+ data.message;
 
-                var chat = document.getElementById("chatWindow");
-                chat.appendChild(div);
+                document.getElementById("chatWindow").appendChild(div);
 		    });
             // TODO: store id on server http://stackoverflow.com/questions/7702461/socket-io-custom-client-id
         </script>
