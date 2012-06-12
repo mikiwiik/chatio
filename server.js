@@ -37,6 +37,6 @@ io.sockets.on('connection', function (socket) {
     socket.on('setNick', function (nick) {
         console.log("'setNick':" +  JSON.stringify(nick));
         nickBySocket[socket.id] = nick;
-        socket.broadcast.emit('message', {message: " is now " + nick, client : nick});
+        socket.broadcast.emit('message', {message: " is now " + nick, client : socket.id});
     });
 });
