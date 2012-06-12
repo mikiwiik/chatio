@@ -36,10 +36,7 @@ io.sockets.on('connection', function (socket) {
     // Set nick for specific client (=socket). Tell everyone
     socket.on('setNick', function (nick) {
         console.log("'setNick':" +  JSON.stringify(nick));
-
         nickBySocket[socket.id] = nick;
-        var nickChangedMessage = " is now " + nick;
-        socket.broadcast.emit('message',
-            {message: nickChangedMessage, client : nick});
+        socket.broadcast.emit('message', {message: " is now " + nick, client : nick});
     });
 });
