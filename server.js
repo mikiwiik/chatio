@@ -24,19 +24,27 @@ io.sockets.on('connection', function (socket) {
     console.log(data);
   });*/
 
+    var nickBySocket = {};
+
 	// TODO: Act as a message broker
     socket.on('chat', function (data) {
 
-        // TODO: allow defining alias for socket, like me=miki. Show that instead. Or define in client
-        console.log("chat|" + socket.id +":" + JSON.stringify(data));
-
-        //console.log(JSON.stringify(io.sockets.sockets));
-
-        data.id = socket.id;
-        // TODO: Add messageIs add sender id.
+        data.client =  nickBySocket[socket.id] == undefined ?  socket.id : nickBySocket[socket.id];
+        console.log('client:' + data.client);
+        console.log("chat|" + data.client +":" + JSON.stringify(data));
 
         socket.broadcast.emit('message', data);
 
         // Send to specific <namespace>.socket(<id>).send()
 	});
+
+    // Set nick for specific client (=socket). Tell everyone
+    socket.on('setNick', function (nick) {
+        console.log("'setNick':" +  JSON.stringify(nick));
+
+        nickBySocket[socket.id] = nick;
+        var nickChangedMessage = " is now " + nick;
+        socket.broadcast.emit('message',
+            {message: nickChangedMessage, client : nick});
+    });
 });
