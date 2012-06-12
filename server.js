@@ -23,9 +23,8 @@ io.sockets.on('connection', function (socket) {
 
 	// TODO: Act as a message broker
     socket.on('chat', function (data) {
-
+        // Retrieve nick if set, otherwise use the socket.id as client identifier
         data.client =  nickBySocket[socket.id] == undefined ?  socket.id : nickBySocket[socket.id];
-        console.log('client:' + data.client);
         console.log("chat|" + data.client +":" + JSON.stringify(data));
 
         socket.broadcast.emit('message', data);
