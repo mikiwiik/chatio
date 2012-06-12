@@ -24,7 +24,6 @@
 
             document.getElementById("setNick").onclick = function(event) {
                 var nick = document.getElementById("message").value;
-                //socket.emit('setNick', {message: nick} );
                 socket.emit('setNick', nick );
             }
 
