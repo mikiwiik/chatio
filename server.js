@@ -27,6 +27,7 @@ io.sockets.on('connection', function (socket) {
         data.client =  nickBySocket[socket.id] == undefined ?  socket.id : nickBySocket[socket.id];
         console.log("chat|" + data.client +":" + JSON.stringify(data));
 
+        // TODO: Send to sender too.
         socket.broadcast.emit('message', data);
 
         // Send to specific <namespace>.socket(<id>).send()
