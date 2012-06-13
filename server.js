@@ -3,7 +3,7 @@ var app = require('http').createServer(handler)
   , fs = require('fs');
 
 // NOTE: Ubuntu does not allow 80 for standard users
-app.listen(8080);
+app.listen(8888);
 
 function handler (req, res) {
   fs.readFile(__dirname + '/index.html',
