@@ -2,6 +2,7 @@
 	<head>
         <meta charset="UTF-8" />
 		<title>The simplest chat there is</title>
+
         <script src="/socket.io/socket.io.js"></script>
 	</head>
 	<body>
@@ -11,30 +12,32 @@
         <button id='setNick'>Set nick</button>
 
         <script>
-            var socket = io.connect('http://localhost');
+            (function onLoad(window, document, undefined) {
+                var socket = io.connect('http://localhost');
 
-            document.getElementById("send").onclick = function(event) {
-                var message = document.getElementById("message").value;
-                console.log("sendMessage called with:" + JSON.stringify(message));
+                document.getElementById("send").onclick = function(event) {
+                    var message = document.getElementById("message").value;
+                    console.log("sendMessage called with:" + JSON.stringify(message));
 
-                // TODO: Broadcast to everyone, including myself
-                socket.emit('chat', {message: message} );
-                // TODO: Why's send not working?
-            }
+                    // TODO: Broadcast to everyone, including myself
+                    socket.emit('chat', {message: message} );
+                    // TODO: Why's send not working?
+                }
 
-            document.getElementById("setNick").onclick = function(event) {
-                var nick = document.getElementById("message").value;
-                socket.emit('setNick', nick );
-            }
+                document.getElementById("setNick").onclick = function(event) {
+                    var nick = document.getElementById("message").value;
+                    socket.emit('setNick', nick );
+                }
 
-            socket.on('message', function (data) {
-                // Could be jQuery, like: $("#chatWindow").append("<div>" + data.id +" "+ data.message +"</div>");
+                socket.on('message', function (data) {
+                    // Could be jQuery, like: $("#chatWindow").append("<div>" + data.id +" "+ data.message +"</div>");
 
-                var div = document.createElement("div");
-                div.innerHTML = data.client +": "+ data.message;
+                    var div = document.createElement("div");
+                    div.innerHTML = data.client +": "+ data.message;
 
-                document.getElementById("chatWindow").appendChild(div);
-		    });
+                    document.getElementById("chatWindow").appendChild(div);
+                });
+            })(window, document, undefined);
         </script>
 	</body>
 </html>
