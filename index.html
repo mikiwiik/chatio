@@ -5,8 +5,8 @@
         <script src="/socket.io/socket.io.js"></script>
 	</head>
 	<body>
-		<div id="chatWindow"></div>
-        <input id="message"  type='text' name='message' value="" />
+        <div id="chatWindow"></div>
+        <span id="myNick"></span> <input id="message"  type='text' name='message' value="" />
         <button id='send'>Send</button>
         <button id='setNick'>Set nick</button>
 
@@ -22,15 +22,20 @@
                 // TODO: Why's send not working?
             }
 
-            document.getElementById("setNick").onclick = function(event) {
-                var nick = document.getElementById("message").value;
+            function setNick(nick) {
                 socket.emit('setNick', nick );
+                document.getElementById("myNick").innerHTML = nick;
+            }
+
+            document.getElementById("setNick").onclick = function(event) {
+                setNick(document.getElementById("message").value);
             }
 
             socket.on('message', function (data) {
                 // Could be jQuery, like: $("#chatWindow").append("<div>" + data.id +" "+ data.message +"</div>");
 
                 var div = document.createElement("div");
+                div.className = "message";
                 div.innerHTML = data.client +": "+ data.message;
 
                 document.getElementById("chatWindow").appendChild(div);
