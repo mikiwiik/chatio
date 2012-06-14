@@ -18,15 +18,25 @@
                 console.log("sendMessage called with:" + JSON.stringify(message));
 
                 socket.emit('chat', {message: message} );
-            }
+            };
 
+            // Emit an 'setNick' event an set the value of the 'myNick' div
             function setNick(nick) {
                 socket.emit('setNick', nick );
                 document.getElementById("myNick").innerHTML = nick;
             }
 
+            // When pressing set nick, store the value in localstorage and emit an event
             document.getElementById("setNick").onclick = function(event) {
-                setNick(document.getElementById("message").value);
+                var nick = document.getElementById("message").value;
+                localStorage.setItem('nick', nick);
+                setNick(nick);
+            };
+
+            // If an existing nick already exists in local storage, set that
+            var previousNick = localStorage.getItem('nick');
+            if (Boolean(previousNick)) {
+                setNick(previousNick);
             }
 
             socket.on('message', function (data) {

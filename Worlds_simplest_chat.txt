@@ -13,3 +13,7 @@ http://davidwalsh.name/websocket
 http://howtonode.org/websockets-socketio
 
 http://stackoverflow.com/questions/8577574/socket-io-with-cluster-iterating-over-all-open-connections
+
+
+* HTML5 local storage
+http://stackoverflow.com/questions/2010892/storing-objects-in-html5-localstorage
