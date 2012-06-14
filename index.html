@@ -43,6 +43,7 @@
 
                 var div = document.createElement("div");
                 div.className = "message";
+                // TODO: separate spans
                 div.innerHTML = data.client +": "+ data.message;
 
                 document.getElementById("chatWindow").appendChild(div);
