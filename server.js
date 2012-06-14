@@ -28,7 +28,9 @@ io.sockets.on('connection', function (socket) {
         console.log("chat|" + data.client +":" + JSON.stringify(data));
 
         // TODO: Send to sender too.
-        socket.broadcast.emit('message', data);
+        //socket.broadcast.emit('message', data);
+        // NOTE: Sending to ALL sockets, no just this namespace
+        io.sockets.emit('message', data);
 
         // Send to specific <namespace>.socket(<id>).send()
 	});
@@ -37,6 +39,6 @@ io.sockets.on('connection', function (socket) {
     socket.on('setNick', function (nick) {
         console.log("'setNick':" +  JSON.stringify(nick));
         nickBySocket[socket.id] = nick;
-        socket.broadcast.emit('message', {message: " is now " + nick, client : socket.id});
+        io.sockets.emit('message', {message: " is now " + nick, client : socket.id});
     });
 });
