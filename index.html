@@ -17,9 +17,7 @@
                 var message = document.getElementById("message").value;
                 console.log("sendMessage called with:" + JSON.stringify(message));
 
-                // TODO: Broadcast to everyone, including myself
                 socket.emit('chat', {message: message} );
-                // TODO: Why's send not working?
             }
 
             function setNick(nick) {
