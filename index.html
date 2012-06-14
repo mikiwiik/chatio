@@ -15,8 +15,7 @@
 
             document.getElementById("send").onclick = function(event) {
                 var message = document.getElementById("message").value;
-                console.log("sendMessage called with:" + JSON.stringify(message));
-
+                //console.log("sendMessage called with:" + JSON.stringify(message));
                 socket.emit('chat', {message: message} );
             };
 
