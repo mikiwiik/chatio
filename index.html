@@ -13,7 +13,8 @@
 
         <script>
             (function onLoad(window, document, undefined) {
-                var socket = io.connect('http://localhost');
+                // TODO: Define Ip based on startup params
+                var socket = io.connect('http://192.168.133.110:');
 
             document.getElementById("send").onclick = function(event) {
                 var message = document.getElementById("message").value;
