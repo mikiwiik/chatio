@@ -6,8 +6,8 @@
         <script src="/socket.io/socket.io.js"></script>
 	</head>
 	<body>
-		<div id="chatWindow"></div>
-        <input id="message"  type='text' name='message' value="" />
+        <div id="chatWindow"></div>
+        <span id="myNick"></span> <input id="message"  type='text' name='message' value="" />
         <button id='send'>Send</button>
         <button id='setNick'>Set nick</button>
 
@@ -15,25 +15,38 @@
             (function onLoad(window, document, undefined) {
                 var socket = io.connect('http://localhost');
 
-                document.getElementById("send").onclick = function(event) {
-                    var message = document.getElementById("message").value;
-                    console.log("sendMessage called with:" + JSON.stringify(message));
+            document.getElementById("send").onclick = function(event) {
+                var message = document.getElementById("message").value;
+                //console.log("sendMessage called with:" + JSON.stringify(message));
+                socket.emit('chat', {message: message} );
+            };
 
-                    // TODO: Broadcast to everyone, including myself
-                    socket.emit('chat', {message: message} );
-                    // TODO: Why's send not working?
-                }
+            // Emit an 'setNick' event an set the value of the 'myNick' div
+            function setNick(nick) {
+                socket.emit('setNick', nick );
+                document.getElementById("myNick").innerHTML = nick;
+            }
 
-                document.getElementById("setNick").onclick = function(event) {
-                    var nick = document.getElementById("message").value;
-                    socket.emit('setNick', nick );
-                }
+            // When pressing set nick, store the value in localstorage and emit an event
+            document.getElementById("setNick").onclick = function(event) {
+                var nick = document.getElementById("message").value;
+                localStorage.setItem('nick', nick);
+                setNick(nick);
+            };
+
+            // If an existing nick already exists in local storage, set that
+            var previousNick = localStorage.getItem('nick');
+            if (Boolean(previousNick)) {
+                setNick(previousNick);
+            }
 
                 socket.on('message', function (data) {
                     // Could be jQuery, like: $("#chatWindow").append("<div>" + data.id +" "+ data.message +"</div>");
 
-                    var div = document.createElement("div");
-                    div.innerHTML = data.client +": "+ data.message;
+                var div = document.createElement("div");
+                div.className = "message";
+                // TODO: separate spans
+                div.innerHTML = data.client +": "+ data.message;
 
                     document.getElementById("chatWindow").appendChild(div);
                 });
