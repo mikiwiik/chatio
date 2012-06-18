@@ -51,11 +51,12 @@
             <div id="chatWindow"></div>
             <!--See: http://twitter.github.com/bootstrap/base-css.html#forms-->
             <div class="input-prepend input-append">
-                <span id="myNick" class="add-on"></span>
+                <button id='setNick' class="btn btn-info"><i class="icon-user icon-white"></i>
+                    <span id="myNick"></span>
+                </button>
                 <input id="message" class="span6"  type='text' name='message' value="" />
-                <button id='send' class="btn">Send</button>
+                <button id='send' class="btn btn-primary">Send</button>
             </div>
-            <button id='setNick' class="add-on">Set nick</button>
         </div>
 
         <script>
