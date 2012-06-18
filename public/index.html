@@ -47,8 +47,19 @@
         </div>
 
         <div class="container">
+            <!--TODO: fluid, equally sized divs-->
 
-            <div id="chatWindow"></div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="span2">user</th>
+                        <th>message</th>
+                    </tr>
+                </thead>
+                <tbody id="chatWindow" >
+                </tbody>
+            </table>
+
             <!--See: http://twitter.github.com/bootstrap/base-css.html#forms-->
             <div class="input-prepend input-append">
                 <button id='setNick' class="btn btn-info"><i class="icon-user icon-white"></i>
@@ -92,12 +103,17 @@
                 socket.on('message', function (data) {
                     // Could be jQuery, like: $("#chatWindow").append("<div>" + data.id +" "+ data.message +"</div>");
 
-                var div = document.createElement("div");
-                div.className = "message";
-                // TODO: separate spans
-                div.innerHTML = data.client +": "+ data.message;
+                    // Add a new row as last
+                    // http://www.w3schools.com/jsref/met_table_insertrow.asp
+                    var row = document.getElementById("chatWindow").insertRow(-1);
 
-                    document.getElementById("chatWindow").appendChild(div);
+                    var user = row.insertCell(0);
+                    user.id = 'chat-user';
+                    user.textContent = data.client;
+
+                    var message = row.insertCell(1);
+                    message.id = 'chat-message';
+                    message.textContent = data.message;
                 });
             })(window, document, undefined);
         </script>
