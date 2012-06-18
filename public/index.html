@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <meta charset="UTF-8" />
+		<title>The simplest chat there is</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="The simplest socket.io chat there is.">
+        <meta name="author" content="miki.wiik@gmail.com">
+
+        <!-- Le styles -->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <style>
+            body {
+                padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+            }
+        </style>
+        <link href="css/bootstrap-responsive.css" rel="stylesheet">
+
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <script src="http://localhost:8888/socket.io/socket.io.js"></script>
+	</head>
+	<body>
+
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#">Project name</a>
+                    <div class="nav-collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+
+            <div id="chatWindow"></div>
+            <span id="myNick"></span> <input id="message"  type='text' name='message' value="" />
+            <button id='send'>Send</button>
+            <button id='setNick'>Set nick</button>
+
+        </div>
+
+        <script>
+            (function onLoad(window, document, undefined) {
+                // TODO: Define Ip based on startup params
+                var socket = io.connect('http://localhost:8888');
+
+            document.getElementById("send").onclick = function(event) {
+                var message = document.getElementById("message").value;
+                //console.log("sendMessage called with:" + JSON.stringify(message));
+                socket.emit('chat', {message: message} );
+            };
+
+            // Emit an 'setNick' event an set the value of the 'myNick' div
+            function setNick(nick) {
+                socket.emit('setNick', nick );
+                document.getElementById("myNick").innerHTML = nick;
+            }
+
+            // When pressing set nick, store the value in localstorage and emit an event
+            document.getElementById("setNick").onclick = function(event) {
+                var nick = document.getElementById("message").value;
+                localStorage.setItem('nick', nick);
+                setNick(nick);
+            };
+
+            // If an existing nick already exists in local storage, set that
+            var previousNick = localStorage.getItem('nick');
+            if (Boolean(previousNick)) {
+                setNick(previousNick);
+            }
+
+                socket.on('message', function (data) {
+                    // Could be jQuery, like: $("#chatWindow").append("<div>" + data.id +" "+ data.message +"</div>");
+
+                var div = document.createElement("div");
+                div.className = "message";
+                // TODO: separate spans
+                div.innerHTML = data.client +": "+ data.message;
+
+                    document.getElementById("chatWindow").appendChild(div);
+                });
+            })(window, document, undefined);
+        </script>
+	</body>
+</html>

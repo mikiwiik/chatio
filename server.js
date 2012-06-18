@@ -18,6 +18,17 @@ function handler (req, res) {
     });
 }
 
+var static = require('node-static'), fileServer = new(static.Server)('./public');
+
+require('http').createServer(function (request, response) {
+
+    request.addListener('end', function() {
+
+        //response.
+        fileServer.serve(request, response);
+    });
+}).listen(8080);
+
 io.sockets.on('connection', function (socket) {
     var nickBySocket = {};
 
